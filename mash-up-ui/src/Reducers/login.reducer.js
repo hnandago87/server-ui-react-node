@@ -15,6 +15,7 @@ export function login(state=initialState, action){
         case FAILURE_LOGIN:
             return {};
         case LOGOUT:
+            console.log(action)
             return {
                 loggedIn:false
             };

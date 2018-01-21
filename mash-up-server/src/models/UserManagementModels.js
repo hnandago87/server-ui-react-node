@@ -3,7 +3,6 @@ import {mongooseConnection} from '../globals/MongoDbConfig';
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const randomstring = require("randomstring");
-const ejwt = require('express-jwt');
 const jwt = require('jsonwebtoken');
 import {JWTSecret} from '../globals/DbConfig';
 
@@ -56,12 +55,26 @@ userSchema.methods.generateAuthToken = function(){
         return token;
     });
 }
+userSchema.methods.removeToken = function(token){
+    var user =  this;
+    user.tokens = user.tokens.filter((el)=>{
+        return el.token != token
+    });
+    return user.save().then(()=>{
+        return result;
+    })
+}
 userSchema.statics.findUserByEmail = function(email){
     var User = this;
     return User.findOne({"email":email})
 }
 userSchema.statics.comparePassword = function(clientPassword, hashedPassword){
     return bcrypt.compare(clientPassword, hashedPassword);
+}
+
+userSchema.statics.findUserByToken = function(token){
+    var User = this;
+    return User.findOne({"tokens.token":token});
 }
 var User = mongoose.model('User', userSchema,'userLogin');
 

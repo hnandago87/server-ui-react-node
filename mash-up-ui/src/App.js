@@ -14,7 +14,7 @@ import BlogComponent from './Blog/BlogComponent'
 import SharingComponent from './Sharing/SharingComponent'
 import MediaComponent from './Media/MediaComponent'
 import RandomizeComponent from './Randomize/RandomizeComponent'
-
+import ResetCredentialsComponent from './reusable_components/resetCredentialsComponent'
 class App extends Component {
   constructor(props){
     super(props)
@@ -27,12 +27,13 @@ class App extends Component {
           <BrowserRouter>
             <div>
                 <Route exact path='/' render={()=> <HomeComponent isAuthenticated={this.props.isAuthenticated}/>}/>
+                <Route path='/reset' component={ResetCredentialsComponent} />
                 <PrivateRoute path='/blog' component={BlogComponent} isAuthenticated={this.props.isAuthenticated} />
                 <PrivateRoute path='/share'component={SharingComponent} isAuthenticated={this.props.isAuthenticated} />
                 <PrivateRoute path='/media' component={MediaComponent} isAuthenticated={this.props.isAuthenticated} />
                 <PrivateRoute path='/randomize' component={RandomizeComponent} isAuthenticated={this.props.isAuthenticated} />
             </div>
-        </BrowserRouter>
+          </BrowserRouter>
         </LayoutComponent>
       </div>
     );

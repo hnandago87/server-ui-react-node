@@ -1,4 +1,4 @@
-import {sendLoginToAPI} from '../API/API';
+import {sendLoginToAPI,sendLogoutToAPI} from '../API/API';
 export const SUCCESS_LOGIN='SEND_LOGIN'
 export const FAILURE_LOGIN='FAILURE_LOGIN'
 export const LOGOUT='LOGOUT'
@@ -31,8 +31,14 @@ export function getLogin(login){
 export function logOut(){
     localStorage.removeItem('authenticated');
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
     return (dispatch)=>{
-        dispatch(success({loggedIn:false}))
+        sendLogoutToAPI().then(()=>{
+            dispatch(success({loggedIn:false}))
+        })
+        .catch((err)=>{
+            console.log(err)
+        }) 
     }
     function success(data){
         return {

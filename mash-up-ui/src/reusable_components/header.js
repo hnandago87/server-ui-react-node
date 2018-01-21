@@ -99,6 +99,7 @@ class HeaderComponent extends Component{
                                 <input type="password" className="form-control" name="password" id="Password" placeholder="Password" onChange={this.loginChange} value={this.state.login.password} required />
                             </div>
                             <button type="submit" className="btn btn-success">Sign in</button>
+                            <button type="reset" className="btn btn-warning">Forgot credentials</button>
                         </form>
                     </div>
                     </div>

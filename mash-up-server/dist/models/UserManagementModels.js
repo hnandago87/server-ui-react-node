@@ -13,7 +13,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var validator = require('validator');
 var bcrypt = require('bcryptjs');
 var randomstring = require("randomstring");
-var ejwt = require('express-jwt');
 var jwt = require('jsonwebtoken');
 
 
@@ -66,12 +65,26 @@ userSchema.methods.generateAuthToken = function () {
         return token;
     });
 };
+userSchema.methods.removeToken = function (token) {
+    var user = this;
+    user.tokens = user.tokens.filter(function (el) {
+        return el.token != token;
+    });
+    return user.save().then(function () {
+        return result;
+    });
+};
 userSchema.statics.findUserByEmail = function (email) {
     var User = this;
     return User.findOne({ "email": email });
 };
 userSchema.statics.comparePassword = function (clientPassword, hashedPassword) {
     return bcrypt.compare(clientPassword, hashedPassword);
+};
+
+userSchema.statics.findUserByToken = function (token) {
+    var User = this;
+    return User.findOne({ "tokens.token": token });
 };
 var User = _mongoose2.default.model('User', userSchema, 'userLogin');
 

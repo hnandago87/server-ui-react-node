@@ -1,6 +1,6 @@
+import {config} from './globals'
 export function sendLoginToAPI(data){
-    console.log(data)
-    return fetch("http://localhost:5000/usersLogin/login",{
+    return fetch(config.hostname+"usersLogin/login",{
         headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -21,5 +21,20 @@ export function sendLoginToAPI(data){
         localStorage.setItem('authenticated', true);
         localStorage.setItem('user', response.email);
         return response
+    })
+}
+export function sendLogoutToAPI(){
+    return fetch(config.hostname+"userLogin/logout",{
+        headers:{
+            'Accept':'application/json',
+            'Content-Type':'application/json',
+            'x-auth-token':localStorage.getItem('token')
+        },
+        method:"GET"
+    }).then((response)=>{
+        if(!response.ok){
+            return Promise.reject("logout not successfull!!");
+        }
+        return response.json();
     })
 }
