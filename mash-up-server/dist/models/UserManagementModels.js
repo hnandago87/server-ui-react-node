@@ -70,7 +70,7 @@ userSchema.methods.removeToken = function (token) {
     user.tokens = user.tokens.filter(function (el) {
         return el.token != token;
     });
-    return user.save().then(function () {
+    return user.save().then(function (result) {
         return result;
     });
 };

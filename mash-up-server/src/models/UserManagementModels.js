@@ -60,7 +60,7 @@ userSchema.methods.removeToken = function(token){
     user.tokens = user.tokens.filter((el)=>{
         return el.token != token
     });
-    return user.save().then(()=>{
+    return user.save().then((result)=>{
         return result;
     })
 }

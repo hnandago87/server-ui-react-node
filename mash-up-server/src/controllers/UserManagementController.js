@@ -45,6 +45,8 @@ export function verifyAndRemoveUser(req, res, next){
                     if(decodedToken && decodedToken.user === req.body.email){
                         loggedInUser.removeToken(req.body.token).then((user)=>{
                            next();
+                        }).catch((err)=>{
+                            res.status(403).send({"error":"Action failed"})
                         })
                     } else {
                         res.status(401).send({"error":"Action failed"})
@@ -53,6 +55,8 @@ export function verifyAndRemoveUser(req, res, next){
             } else{
                 res.status(401).send({"error":"Cannot perform action"});
             }
+        }).catch((err)=>{
+            res.status(401).send({"error":"Cannot locate user"})
         })
     }
     else {
