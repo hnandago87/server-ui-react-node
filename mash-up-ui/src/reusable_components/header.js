@@ -17,10 +17,10 @@ class HeaderComponent extends Component{
         this.toggleLogin = this.toggleLogin.bind(this);
         this.logOutUser = this.logOutUser.bind(this);
     }
-    logOutUser(e){
-        e.preventDefault();
+    logOutUser(email){
         console.log(this.props)
-        this.props.getSignedOut()
+        console.log(email)
+        this.props.getSignedOut({"email":email})
     }
     toggleLogin(){
         if(this.state.showLoinModal.split(" ").length < 6){
@@ -80,7 +80,7 @@ class HeaderComponent extends Component{
                         <li><a href="/randomize">Randomize</a></li>
                         {this.props.user.loggedIn?
                             ( <li>
-                                <a className="btn btn-primary" onClick={this.logOutUser}>Sign Out</a>
+                                <a className="btn btn-primary" onClick={this.logOutUser.bind(null,this.props.user.email)}>Sign Out</a>
                             </li>)
                         :(
                             <li>
@@ -117,7 +117,7 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
     return{
         getLogin:(data)=>{dispatch(getLogin(data))},
-        getSignedOut:()=>{dispatch(logOut())}
+        getSignedOut:(data)=>{dispatch(logOut(data))}
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(HeaderComponent);

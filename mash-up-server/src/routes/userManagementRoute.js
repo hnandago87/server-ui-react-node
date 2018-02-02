@@ -1,6 +1,5 @@
 const express = require('express');
 import {User} from '../models/UserManagementModels'
-import { verifyJwtToken } from '../controllers/VerifyJWTToken';
 import {initialLoginValidation,signUserJwtToken,verifyAndRemoveUser} from '../controllers/UserManagementController';
 const userManagement = express.Router();
 

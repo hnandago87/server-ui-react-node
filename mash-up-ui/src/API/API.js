@@ -23,14 +23,14 @@ export function sendLoginToAPI(data){
         return response
     })
 }
-export function sendLogoutToAPI(){
-    return fetch(config.hostname+"userLogin/logout",{
+export function sendLogoutToAPI(email){
+    return fetch(config.hostname+"usersLogin/logout",{
         headers:{
             'Accept':'application/json',
-            'Content-Type':'application/json',
-            'x-auth-token':localStorage.getItem('token')
+            'Content-Type':'application/json'
         },
-        method:"GET"
+        method:"POST",
+        body:JSON.stringify({"token":localStorage.getItem("token"),"email":email})
     }).then((response)=>{
         if(!response.ok){
             return Promise.reject("logout not successfull!!");

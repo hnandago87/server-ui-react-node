@@ -1,6 +1,6 @@
 
 import jwt from  'jsonwebtoken';
-import {JWTSecret} from '../globals/DbConfig';
+import {JWTSecret} from '../../globals/DbConfig';
 
 export function verifyJwtToken(token){
     return new Promise((resolve, reject)=>{

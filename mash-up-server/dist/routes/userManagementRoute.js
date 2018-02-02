@@ -2,8 +2,6 @@
 
 var _UserManagementModels = require('../models/UserManagementModels');
 
-var _VerifyJWTToken = require('../controllers/VerifyJWTToken');
-
 var _UserManagementController = require('../controllers/UserManagementController');
 
 var express = require('express');

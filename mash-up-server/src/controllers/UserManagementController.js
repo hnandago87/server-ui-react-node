@@ -1,5 +1,5 @@
 import {User} from '../models/UserManagementModels'
-import { verifyJwtToken } from '../controllers/VerifyJWTToken'
+import { verifyJwtToken } from '../controllers/globalController/VerifyJWTToken'
 
 
 export function initialLoginValidation(req, res, next){

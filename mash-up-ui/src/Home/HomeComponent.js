@@ -15,7 +15,5 @@ class HomeComponent extends Component{
         )
     }
 }
-function mapStateToProps(state){
-    console.log(state)
-}
-export default connect(mapStateToProps)(HomeComponent)
+
+export default HomeComponent

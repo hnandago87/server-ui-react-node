@@ -9,7 +9,7 @@ exports.verifyAndRemoveUser = verifyAndRemoveUser;
 
 var _UserManagementModels = require('../models/UserManagementModels');
 
-var _VerifyJWTToken = require('../controllers/VerifyJWTToken');
+var _VerifyJWTToken = require('../controllers/globalController/VerifyJWTToken');
 
 function initialLoginValidation(req, res, next) {
     if (req.body.email == "" || req.body.password.length > 16 || req.body.password.length < 8) {
