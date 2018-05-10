@@ -5,6 +5,7 @@ var saveUninitialized = true;
 var resave = true;
 var mongoURL = "mongodb://localhost/mashUpDB";
 var JWTSecret = "$2a$10$0mSSOdLdjtdZjh4hCYGxCe2hSlyvM95JvJ3Cj7W.JEy9NmjUO9RXq";
+var sessionKey = "$2a$10$0mSSOdLdjtdZjh4hCYGxCe2hSlyvM95JvJ3Cj7W.JEy9NmjUO9RXq";
 
 module.exports = { secretKey: secretKey, saveUninitialized: saveUninitialized, resave: resave, mongoURL: mongoURL, JWTSecret: JWTSecret
 

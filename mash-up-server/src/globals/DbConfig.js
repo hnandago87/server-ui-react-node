@@ -4,6 +4,7 @@ const saveUninitialized = true;
 const resave = true;
 const mongoURL = "mongodb://localhost/mashUpDB";
 const JWTSecret = "$2a$10$0mSSOdLdjtdZjh4hCYGxCe2hSlyvM95JvJ3Cj7W.JEy9NmjUO9RXq";
+const sessionKey = "$2a$10$0mSSOdLdjtdZjh4hCYGxCe2hSlyvM95JvJ3Cj7W.JEy9NmjUO9RXq";
     
 module.exports = {secretKey,saveUninitialized,resave,mongoURL,JWTSecret}
 
