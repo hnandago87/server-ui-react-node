@@ -31,6 +31,10 @@ var userSchema = new mongoose.Schema({
         type:String,
         required:false
     },
+    organizationCode:{
+        required:true,
+        type:String
+    },
     tokens:[{
         access:{
             type:String,
@@ -49,7 +53,7 @@ userSchema.methods.generateAuthToken = function(){
         length: 12,
         charset: 'alphanumeric'
     });
-    var token = jwt.sign({"user":user.email,"role":user.role, access},JWTSecret).toString();
+    var token = jwt.sign({"user":user.email,"role":user.role,"organizationCode":user.organizationCode, access},JWTSecret).toString();
     user.tokens.push({access,token});
     return user.save().then(()=>{
         return token;

@@ -14,7 +14,7 @@ export function initialLoginValidation(req, res, next){
                   if(!res){
                       res.send({"error":true})
                   } else {
-                      req.user = {"error":false,"_id":user._id,"email":user.email,"password":user.password,"role":user.role};
+                      req.user = {"error":false,"_id":user._id,"email":user.email,"password":user.password,"role":user.role,"organizationCode" : user.organizationCode};
                       next();
                   }
               }); 
@@ -24,12 +24,13 @@ export function initialLoginValidation(req, res, next){
 }
 export function signUserJwtToken (req, res, next){
     if(!req.user.error){
-        var user = new User({"_id":req.user._id,"email":req.user.email,"password":req.user.password,"role":req.user.role});
+        var user = new User({"_id":req.user._id,"email":req.user.email,"password":req.user.password,"role":req.user.role,"organizationCode":req.user.organizationCode});
         user.generateAuthToken().then((token)=>{
             req.cookies.token = token
             req.token = token
             next();
         }).catch((err)=>{
+            console.log(err);
             res.status(403).send({"error":"Error while performing action"})
         });
     }else{

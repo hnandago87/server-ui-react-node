@@ -19,28 +19,29 @@ import {secretKey,saveUninitialized,resave,sessionKey} from './globals/DbConfig'
 const db = mongoose.connection;
 const userManagement = require('./routes/userManagementRoute')
 const PageAccess = require('./routes/pageAccess/PageAccessRoute')
+const projectManagement = require('./routes/projectRoutes/projectRoutes');
 
 const app = express();
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(cookieParser(secretKey));
-app.set('trust proxy', 1) // trust first proxy
-app.use(session({
-  cookieName:"gsessionID",
-  secret: sessionKey,
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true },
-  duration: 30 * 60 * 1000,
-  activeDuration: 5 * 60 * 1000
-}));
-app.use(session({
-  genid: function(req) {
-    return genuuid() // use UUIDs for session IDs
-  },
-  secret: sessionKey
-}))
+// app.set('trust proxy', 1) // trust first proxy
+// app.use(session({
+//   cookieName:"gsessionID",
+//   secret: sessionKey,
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: { secure: true },
+//   duration: 30 * 60 * 1000,
+//   activeDuration: 5 * 60 * 1000
+// }));
+// app.use(session({
+//   genid: function(req) {
+//     return genuuid() // use UUIDs for session IDs
+//   },
+//   secret: sessionKey
+// }));
 app.use(function (req, res, next) {
     console.log(req.headers)
     //  res.header("Access-Control-Allow-Origin", "*");
@@ -55,7 +56,8 @@ app.use(function (req, res, next) {
 });
 
 app.use('/usersLogin',userManagement);
-app.use('/page',PageAccess)
+app.use('/page',PageAccess);
+app.use('/manage',projectManagement);
 
 const port = process.env.PORT || 5000;
 app.listen(port);

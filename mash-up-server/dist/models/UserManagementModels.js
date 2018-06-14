@@ -41,6 +41,10 @@ var userSchema = new _mongoose2.default.Schema({
         type: String,
         required: false
     },
+    organizationCode: {
+        required: true,
+        type: String
+    },
     tokens: [{
         access: {
             type: String,
@@ -59,7 +63,7 @@ userSchema.methods.generateAuthToken = function () {
         length: 12,
         charset: 'alphanumeric'
     });
-    var token = jwt.sign({ "user": user.email, "role": user.role, access: access }, _DbConfig.JWTSecret).toString();
+    var token = jwt.sign({ "user": user.email, "role": user.role, "organizationCode": user.organizationCode, access: access }, _DbConfig.JWTSecret).toString();
     user.tokens.push({ access: access, token: token });
     return user.save().then(function () {
         return token;

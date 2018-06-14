@@ -6,12 +6,14 @@ var express = require('express');
 
 var subUserManagement = express.Router();
 
-subUserManagement.get('/', [validateAdminRole], function (req, res, next) {
+subUserManagement.get('/', [_SubUserController.validateAdminRole], function (req, res, next) {
     res.send({ "title": "welcome to User management" });
 });
 
-subUserManagement.post('/generate-user', [validateAdminRole], function (req, res, next) {
+subUserManagement.post('/generate-user', [_SubUserController.validateAdminRole], function (req, res, next) {
 
     res.send({ "title": "Generate User Profile" });
 });
+
+module.exports = subUserManagement;
 //# sourceMappingURL=subUserRoutes.js.map

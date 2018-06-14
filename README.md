@@ -9,3 +9,8 @@ npm start for both ui and server
 This app is configured for 3030 port on front end.
 
 Use that for localhost purposes. It is not yet ready for production based configuration.
+
+
+##Rules followed in the project:
+    This application follows some rules used in Java Server Side development.
+

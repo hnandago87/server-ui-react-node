@@ -1,8 +1,10 @@
-import mongoose from 'mongoose';
-import {mongoURL} from './DbConfig';
+// import mongoose from 'mongoose';
+// import {mongoURL} from './DbConfig';
+var mongoose = require('mongoose');
+var mongoURL = "mongodb://localhost/mashUpDB";
 mongoose.Promise = global.Promise;
 const mongooseConnection = mongoose.connect(mongoURL);
-export default {mongooseConnection};
+module.export = mongooseConnection;
 
 
 //Madan and Hari password --> Gerrard_08 and hash is "$2a$10$NhmWT1PIfewk5fW0IugBR.cZLtfBBffIH3bt9foteoCTaHGF3XreK"

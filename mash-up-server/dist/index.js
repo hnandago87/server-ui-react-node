@@ -22,47 +22,45 @@ var mongoose = require('mongoose');
 var db = mongoose.connection;
 var userManagement = require('./routes/userManagementRoute');
 var PageAccess = require('./routes/pageAccess/PageAccessRoute');
+var projectManagement = require('./routes/projectRoutes/projectRoutes');
 
 var app = express();
-app.use(express.static(path.join(__dirname, '../client/dist/build/')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser(_DbConfig.secretKey));
-app.set('trust proxy', 1); // trust first proxy
-app.use(session({
-  cookieName: "gsessionID",
-  secret: _DbConfig.sessionKey,
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true },
-  duration: 30 * 60 * 1000,
-  activeDuration: 5 * 60 * 1000
-}));
-app.use(session({
-  genid: function genid(req) {
-    return genuuid(); // use UUIDs for session IDs
-  },
-  secret: _DbConfig.sessionKey
-}));
+// app.set('trust proxy', 1) // trust first proxy
+// app.use(session({
+//   cookieName:"gsessionID",
+//   secret: sessionKey,
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: { secure: true },
+//   duration: 30 * 60 * 1000,
+//   activeDuration: 5 * 60 * 1000
+// }));
+// app.use(session({
+//   genid: function(req) {
+//     return genuuid() // use UUIDs for session IDs
+//   },
+//   secret: sessionKey
+// }));
 app.use(function (req, res, next) {
-  console.log(req.headers);
-  //  res.header("Access-Control-Allow-Origin", "*");
-  //  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-auth-token");
-  // res.header('Access-Control-Allow-Origin', '*');
-  // res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-  // res.header('Access-Control-Allow-Headers', "*");
-  // res.header('Access-Control-Allow-Credentials', true);
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
-  next();
+    console.log(req.headers);
+    //  res.header("Access-Control-Allow-Origin", "*");
+    //  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-auth-token");
+    // res.header('Access-Control-Allow-Origin', '*');
+    // res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+    // res.header('Access-Control-Allow-Headers', "*");
+    // res.header('Access-Control-Allow-Credentials', true);
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "*");
+    next();
 });
 
-app.get('/', function (req, res, next) {
-  res.sendFile(path.join(__dirname, '../client/dist/build/index.html'));
-});
 app.use('/usersLogin', userManagement);
 app.use('/page', PageAccess);
+app.use('/manage', projectManagement);
 
 var port = process.env.PORT || 5000;
 app.listen(port);
