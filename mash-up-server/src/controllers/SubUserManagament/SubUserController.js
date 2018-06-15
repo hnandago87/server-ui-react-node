@@ -20,6 +20,20 @@ export function getProject(req,res,next){
     });
 }
 
+function addProject(req, res,next){
+    if(req.role == "SuperAdmin" || (req.role == "Admin" && req.organizationCode == req.query.organizationCode)){
+        var project = new Project(req.body);
+        project.save().then((data)=>{
+            res.send(data)
+        }).catch((err)=>{
+            res.send({"error":true,"message":"Cannot process action."});
+        })
+    } else {
+        res.status(403).send({"error":true,"message":"Cannot process action."});
+    }
+    
+}
+
 //public methods
 export function validateAdminRole(req,res, next){
     verifyJwtToken(req.headers['x-auth-token']).then((data)=>{
@@ -71,23 +85,7 @@ export function addOrganization(req, res, next){
     }
 }
 
-//Add new project to organization
-export function addProject(req, res,next){
-    if(req.role == "SuperAdmin" || (req.role == "Admin" && req.organizationCode == req.query.organizationCode)){
-        Organization.findOne({"OrganizationCode":req.params.organizationCode}).then((data)=>{
-            var project = new Project(req.body);
-            data.organizationProjects.push(project);
-            data.save().then((data)=>{
-                res.send(data)
-            }).catch((err)=>{
-                res.send({"error":true,"message":"Cannot process action."});
-            })
-        });
-    } else {
-        res.send({"error":true,"message":"Cannot process action."});
-    }
-    
-}
+
 
 //update or delete users, change user access level
 // export function updateProject(req,res,next){

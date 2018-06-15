@@ -28,11 +28,10 @@ projectManagement.all('/organization/:organizationCode/projects/:projectId', [_S
     (0, _SubUserController.getProject)(req, res, next);
 });
 
-// //Create new project
-// projectManagement.post('/organization/:organizationCode/project',[validateAdminRole],(req, res, next)=>{
-//     addProject(req,res,next);
-// });
-
+//Create new project
+projectManagement.post('/organization/:organizationCode/project', [_SubUserController.validateAdminRole], function (req, res, next) {
+    addProject(req, res, next);
+});
 
 module.exports = projectManagement;
 //# sourceMappingURL=projectRoutes.js.map

@@ -7,7 +7,6 @@ exports.getProject = getProject;
 exports.validateAdminRole = validateAdminRole;
 exports.getProjects = getProjects;
 exports.addOrganization = addOrganization;
-exports.addProject = addProject;
 
 var _UserManagementModels = require('../../models/UserManagementModels');
 
@@ -33,6 +32,19 @@ function getProject(req, res, next) {
         console.log(err);
         res.status(404).send({ "error": true, "message": "No data found" });
     });
+}
+
+function addProject(req, res, next) {
+    if (req.role == "SuperAdmin" || req.role == "Admin" && req.organizationCode == req.query.organizationCode) {
+        var project = new _ProjectModel.Project(req.body);
+        project.save().then(function (data) {
+            res.send(data);
+        }).catch(function (err) {
+            res.send({ "error": true, "message": "Cannot process action." });
+        });
+    } else {
+        res.status(403).send({ "error": true, "message": "Cannot process action." });
+    }
 }
 
 //public methods
@@ -83,23 +95,6 @@ function addOrganization(req, res, next) {
         });
     } else {
         res.status(403).send({ "error": true, "message": "Cannot process action." });
-    }
-}
-
-//Add new project to organization
-function addProject(req, res, next) {
-    if (req.role == "SuperAdmin" || req.role == "Admin" && req.organizationCode == req.query.organizationCode) {
-        _OrganizationModal.Organization.findOne({ "OrganizationCode": req.params.organizationCode }).then(function (data) {
-            var project = new _ProjectModel.Project(req.body);
-            data.organizationProjects.push(project);
-            data.save().then(function (data) {
-                res.send(data);
-            }).catch(function (err) {
-                res.send({ "error": true, "message": "Cannot process action." });
-            });
-        });
-    } else {
-        res.send({ "error": true, "message": "Cannot process action." });
     }
 }
 

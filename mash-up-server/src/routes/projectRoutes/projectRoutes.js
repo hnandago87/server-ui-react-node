@@ -26,10 +26,10 @@ projectManagement.all('/organization/:organizationCode/projects/:projectId',[val
     getProject(req,res,next);
 });
 
-// //Create new project
-// projectManagement.post('/organization/:organizationCode/project',[validateAdminRole],(req, res, next)=>{
-//     addProject(req,res,next);
-// });
+//Create new project
+projectManagement.post('/organization/:organizationCode/project',[validateAdminRole],(req, res, next)=>{
+    addProject(req,res,next);
+});
 
 
 module.exports = projectManagement;

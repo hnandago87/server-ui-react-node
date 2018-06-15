@@ -1,12 +1,10 @@
+'use strict';
 const mongoose = require('mongoose');
 const mongooseConnection = require('../globals/MongoDbConfig');
 const validator = require('validator');
 const randomstring = require("randomstring");
-var memberSchema = new mongoose.Schema(
+const memberSchema = new mongoose.Schema(
     {
-        _id: {
-            type:mongoose.Schema.Types.ObjectId
-        },
         memberId:{
             type:String,
             required:true,
@@ -44,5 +42,8 @@ var memberSchema = new mongoose.Schema(
         deleted:{type:Boolean,required:false}
     }
 );
+
+
+
 const Member = mongoose.model('Member', memberSchema,'users');
-module.exports = {Member};
+module.exports = {Member,memberSchema};

@@ -30,7 +30,6 @@ var OrganizationSchema = new mongoose.Schema({
 });
 
 OrganizationSchema.statics.getProjects = function (organizaionCode) {
-    console.log("calling find one for get projects");
     return this.findOne({ "OrganizationCode": organizaionCode }).then(function (data) {
         return data;
     });
@@ -43,15 +42,6 @@ OrganizationSchema.methods.saveOrganization = function () {
     });
 };
 
-function autoPopulateSubs(next) {
-    console.log("pre populate calling");
-    this.populate('Project');
-    this.populate('Member');
-    next();
-}
-
-OrganizationSchema.pre('findOne', autoPopulateSubs).pre('find', autoPopulateSubs);
-
 var Organization = mongoose.model('Organization', OrganizationSchema, 'projectOrganization');
-module.exports = { Organization: Organization };
+module.exports = { Organization: Organization, OrganizationSchema: OrganizationSchema };
 //# sourceMappingURL=OrganizationModal.js.map

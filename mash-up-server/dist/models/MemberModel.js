@@ -5,9 +5,6 @@ var mongooseConnection = require('../globals/MongoDbConfig');
 var validator = require('validator');
 var randomstring = require("randomstring");
 var memberSchema = new mongoose.Schema({
-    _id: {
-        type: mongoose.Schema.Types.ObjectId
-    },
     memberId: {
         type: String,
         required: true,
@@ -44,6 +41,7 @@ var memberSchema = new mongoose.Schema({
     },
     deleted: { type: Boolean, required: false }
 });
+
 var Member = mongoose.model('Member', memberSchema, 'users');
-module.exports = { Member: Member };
+module.exports = { Member: Member, memberSchema: memberSchema };
 //# sourceMappingURL=MemberModel.js.map
